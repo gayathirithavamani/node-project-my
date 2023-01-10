@@ -2,6 +2,9 @@ import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
 import * as dotenv from "dotenv";
 import moviesRouter from "./routes/movies.routes.js";
+import userRouter from "./routes/user.route.js";
+import cors from "cors";
+
 dotenv.config();
 console.log(process.env.MONGO_URL);
 const app = express();
@@ -16,12 +19,14 @@ await client.connect(); //call
 console.log("mongo is connected!!!!✌️✌️✌️✌️");
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", function (request, response) {
   response.send("🙋‍♂️, 🌏 🎊✨🤩");
 });
 
 app.use("/movies", moviesRouter);
+app.use("/user", userRouter);
 
 app.listen(PORT, () =>
   console.log(`The server started in: ${PORT} ✨✨😍😍😘😘❤️❤️✌️✌️`)
