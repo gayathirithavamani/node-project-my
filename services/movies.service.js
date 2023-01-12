@@ -1,19 +1,27 @@
+import { ObjectId } from "mongodb";
 import { client } from "../index.js";
 
 export async function updateMovieById(id, data) {
   return await client
     .db("b40wd")
     .collection("movies")
-    .updateOne({ id: id }, { $set: data });
+    .updateOne({ id: ObjectId(id) }, { $set: data });
 }
 export async function deleteMovieById(id) {
-  return await client.db("b40wd").collection("movies").deleteOne({ id: id });
+  return await client
+    .db("b40wd")
+    .collection("movies")
+    .deleteOne({ id: ObjectId(id) });
 }
 export async function createMovies(data) {
   return await client.db("b40wd").collection("movies").insertMany(data);
 }
 export async function getMovieById(id) {
-  return await client.db("b40wd").collection("movies").findOne({ id: id });
+  console.log("*****", id);
+  return await client
+    .db("b40wd")
+    .collection("movies")
+    .findOne({ _id: ObjectId(id) });
 }
 export async function getMovies(request) {
   return await client
